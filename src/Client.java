@@ -19,14 +19,23 @@ public class Client {
         // create in / out
         BufferedReader inClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter outClient = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+        OutputStream outputStream = socket.getOutputStream();
 
-        // todo: implement the scenario
-
+        System.out.println("Sending string to the ServerSocket");
+        // Raed the input
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter a string");
+        String in = input.nextLine();
+        //Send input to Server
+        outClient.println(in);
+        // Read the server reply
+        String reply = inClient.readLine();
+        System.out.println(reply);
         //close in / out
         inClient.close();
         outClient.close();
 
-        // close client socket
+        //close client socket
         socket.close();
     }
 }
