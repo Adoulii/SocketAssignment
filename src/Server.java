@@ -1,13 +1,12 @@
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.CharBuffer;
 
 public class Server {
-
     static final int port = 1200;
 
     public static void main(String[] args) throws Exception {
-
         // Listen to a specific port
 
         ServerSocket serverSocket = new ServerSocket(port);
@@ -19,8 +18,13 @@ public class Server {
         BufferedReader inServer = new BufferedReader(new InputStreamReader(socClient.getInputStream()));
         PrintWriter outServer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socClient.getOutputStream())), true);
 
-        // todo: implement the scenario
-
+        // create a DataInputStream so we can read data from it.
+        // read the message from the socket
+        String ch = inServer.readLine();
+        //Delete all vowels and send reply to client
+        ch = ch.replaceAll("[aeiouyAEIOUY]", "");
+        outServer.println(ch);
+        System.out.println("Closing sockets.");
         // Close in / out
         inServer.close();
         outServer.close();
